@@ -6,6 +6,7 @@ describe('Cinema', function () {
 
   let moonlight;
   let bladeRunner;
+  let bladeRunnerOld;
   let dunkirk;
   let blackPanther;
   let trainspotting;
@@ -15,11 +16,12 @@ describe('Cinema', function () {
   beforeEach(function () {
     moonlight = new Film('Moonlight', 'drama', 2016, 111);
     bladeRunner = new Film('Blade Runner 2049', 'sci-fi', 2017, 164);
+    bladeRunnerOld = new Film('Blade Runner', 'sci-fi', 1985, 164);
     dunkirk = new Film('Dunkirk', 'history', 2017, 96);
     blackPanther = new Film('Black Panther', 'action', 2018, 134);
     trainspotting = new Film('T2 Trainspotting', 'drama', 2017, 117);
 
-    films = [moonlight, bladeRunner, dunkirk, blackPanther, trainspotting];
+    films = [moonlight, bladeRunner, bladeRunnerOld, dunkirk, blackPanther, trainspotting];
     cinema = new Cinema(films);
   });
 
@@ -30,7 +32,7 @@ describe('Cinema', function () {
 
   it('should be able to get a list of film titles', function(){
     const actual = cinema.listFilm(films)
-    const excpected = ['Moonlight', 'Blade Runner 2049', 'Dunkirk', 'Black Panther', 'T2 Trainspotting']
+    const excpected = ['Moonlight', 'Blade Runner 2049', 'Blade Runner',  'Dunkirk', 'Black Panther', 'T2 Trainspotting']
     assert.deepStrictEqual(actual, excpected)
   });
 
@@ -41,10 +43,27 @@ describe('Cinema', function () {
     });
 
 
-  it('should be able to filter films by genre');
-  it('should be able to check whether there are some films from a particular year');
-  it('should be able to check whether there are no films from a particular year');
+  it('should be able to filter films by genre', function(){
+    const actual = cinema.findByGenre('sci-fi')
+    assert.deepStrictEqual(actual, [bladeRunner, bladeRunnerOld])
+  });
+
+  it('should be able to check whether there are some films from a particular year', function(){
+    const actual = cinema.findByYear(2017)
+    assert.deepStrictEqual(actual, [bladeRunner, dunkirk, trainspotting])
+  });
+
+  xit('should be able to check whether there are no films from a particular year', function(){
+    const actual = cinema.checkByYear(1988)
+    assert.strictEqual(actual, false)
+  });
+
   it('should be able to check whether all films are over a particular length');
-  it('should be able to calculate total running time of all films');
+  it('should be able to calculate total running time of all films', function(){
+    const actual = cinema.totalRunnings(films)
+    assert.strictEqual(actual, 759)
+  });
+
+
 
 });
