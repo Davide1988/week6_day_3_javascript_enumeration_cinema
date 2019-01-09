@@ -18,13 +18,15 @@ Cinema.prototype.findByYear = function (year) {
   return result = this.films.filter((movie) => movie.year === year)
 };
 
-Cinema.prototype.checkByYear = function (year) {
-  this.films.filter((movie) => )
-}
+// Cinema.prototype.checkByYear = function (year) {
+//   this.films.filter((movie) => )
+// }
 
 
 Cinema.prototype.totalRunnings = function () {
-  return result = this.films.reduce((a, b) => a + b, 0);
+  return this.films.reduce((total,film) => {
+    return total += film.length;
+  }, 0);
 };
 
 module.exports = Cinema;
